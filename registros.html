@@ -587,19 +587,19 @@
         // CONFIGURACION
         // ========================
         // Cambia esta URL por la nueva URL de tu Apps Script después de reimplementar
-        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx7iVU5E9ZyKv6DfIiAKUREY_25Q-rafhzGEmHZjDncijcM-4R3wgPKFd1qMZrL6w9y/exec";
+        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwwAwGziE1bRIhDl1KNH2lWpPAj9h_ZnYG0y7gosb_uAcxvx4B1ZTmGYa4Wlmxr31di/exec";
 
-        // Los nombres de columna deben coincidir exactamente con los encabezados de tu hoja
+        // Los nombres deben coincidir EXACTAMENTE con las claves del doGet
         const COLUMNAS = [
             "Nombre y Apellido",
             "Edad",
             "Fecha de Nacimiento",
-            "Teléfono",
-            "Dirección",
+            "Telefono",
+            "Direccion",
             "Ministerio",
             "Unidos Podemos",
             "Nuevo Miembro",
-            "Petición de Oración",
+            "Peticion de Oracion",
             "Fecha de Registro"
         ];
 
@@ -705,12 +705,12 @@
                     <td class="nombre-col">${escapar(r["Nombre y Apellido"] || '')}</td>
                     <td>${escapar(r["Edad"] || '')}</td>
                     <td style="white-space:nowrap">${escapar(r["Fecha de Nacimiento"] || '')}</td>
-                    <td style="white-space:nowrap">${escapar(r["Teléfono"] || '')}</td>
-                    <td>${escapar(r["Dirección"] || '')}</td>
+                    <td style="white-space:nowrap">${escapar(r["Telefono"] || '')}</td>
+                    <td>${escapar(r["Direccion"] || '')}</td>
                     <td class="ministerio-col">${escapar(r["Ministerio"] || '')}</td>
                     <td>${badge(r["Unidos Podemos"])}</td>
                     <td>${badgeNuevo(r["Nuevo Miembro"])}</td>
-                    <td style="max-width:200px; font-size:0.78rem; line-height:1.5">${escapar(r["Petición de Oración"] || '')}</td>
+                    <td style="max-width:200px; font-size:0.78rem; line-height:1.5">${escapar(r["Peticion de Oracion"] || '')}</td>
                     <td style="white-space:nowrap; font-size:0.78rem">${escapar(r["Fecha de Registro"] || '')}</td>
                 </tr>
             `).join('');
@@ -727,14 +727,18 @@
         }
 
         function badge(valor) {
+            // Tolerante a variaciones de codificación del acento en "Sí"
             const v = String(valor || '').trim();
-            if (v === 'Sí') return `<span class="badge badge-si">Sí</span>`;
+            const esSi = v === 'Sí' || v === 'Si' || v === 'sí' || v === 'si' || v.charCodeAt(0) === 83;
+            if (esSi && v.length <= 3) return `<span class="badge badge-si">Sí</span>`;
+            if (v.toLowerCase().startsWith('s')) return `<span class="badge badge-si">Sí</span>`;
             return `<span class="badge badge-no">No</span>`;
         }
 
         function badgeNuevo(valor) {
             const v = String(valor || '').trim();
-            if (v === 'Sí') return `<span class="badge badge-nuevo">✦ Nuevo</span>`;
+            const esSi = v === 'Sí' || v === 'Si' || v === 'sí' || v === 'si';
+            if (esSi || v.toLowerCase().startsWith('s')) return `<span class="badge badge-nuevo">✦ Nuevo</span>`;
             return `<span class="badge badge-no">No</span>`;
         }
 
