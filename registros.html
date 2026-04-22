@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros — Alcance Victoria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="VOI-Logo.ico" />
+    <style>
+        :root {
+            --azul-profundo:    #020B18;
+            --azul-oscuro:      #061428;
+            --azul-medio:       #0A2A4A;
+            --azul-base:        #0D3B6E;
+            --azul-acento:      #1565C0;
+            --azul-brillante:   #1E88E5;
+            --azul-claro:       #42A5F5;
+            --azul-palido:      #90CAF9;
+            --blanco:           #F8FBFF;
+            --borde:            rgba(66, 165, 245, 0.2);
+            --borde-hover:      rgba(66, 165, 245, 0.6);
+            --sombra:           0 8px 32px rgba(2, 11, 24, 0.6);
+            --transicion:       all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--azul-profundo);
+            color: var(--blanco);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 10% 20%, rgba(21, 101, 192, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 90% 80%, rgba(13, 59, 110, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 50% 50%, rgba(30, 136, 229, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ========================
+           TOP BAR
+        ======================== */
+        .topbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            height: 64px;
+            background: rgba(6, 20, 40, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--borde);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        .topbar-logo { width: 30px; height: 60px; flex-shrink: 0; }
+        .topbar-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
+
+        .topbar-titulo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--blanco);
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .topbar-titulo span { color: var(--azul-claro); }
+
+        /* ========================
+           HAMBURGUESA
+        ======================== */
+        .hamburger-btn {
+            width: 40px; height: 40px;
+            background: rgba(66, 165, 245, 0.1);
+            border: 1px solid var(--borde);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: var(--transicion);
+            margin-left: 8px;
+        }
+
+        .hamburger-btn:hover { background: rgba(66, 165, 245, 0.2); border-color: var(--borde-hover); }
+        .hamburger-btn span { display: block; width: 18px; height: 1.5px; background: var(--azul-claro); border-radius: 2px; transition: var(--transicion); }
+        .hamburger-btn.abierto span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .hamburger-btn.abierto span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger-btn.abierto span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        /* ========================
+           PANEL LATERAL
+        ======================== */
+        .panel-lateral {
+            position: fixed;
+            top: 64px; right: -320px;
+            width: 300px;
+            height: calc(100vh - 64px);
+            background: rgba(6, 20, 40, 0.97);
+            backdrop-filter: blur(24px);
+            border-left: 1px solid var(--borde);
+            z-index: 999;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 32px 24px;
+            overflow-y: auto;
+        }
+
+        .panel-lateral.abierto { right: 0; }
+
+        .panel-titulo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: var(--azul-claro);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--borde);
+            letter-spacing: 0.04em;
+        }
+
+        .panel-seccion { margin-bottom: 32px; }
+
+        .panel-contacto-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid var(--borde);
+            background: rgba(10, 42, 74, 0.3);
+            margin-bottom: 12px;
+            transition: var(--transicion);
+        }
+
+        .panel-contacto-item:hover { background: rgba(10, 42, 74, 0.6); border-color: var(--borde-hover); }
+        .panel-contacto-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--azul-palido); opacity: 0.6; margin-bottom: 4px; }
+        .panel-contacto-valor { color: var(--blanco); font-size: 0.88rem; text-decoration: none; font-weight: 400; transition: var(--transicion); display: block; word-break: break-all; }
+        .panel-contacto-valor:hover { color: var(--azul-claro); }
+        .icono { width: 32px; height: 32px; background: rgba(66, 165, 245, 0.1); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+
+        /* ========================
+           OVERLAY
+        ======================== */
+        .overlay { position: fixed; inset: 0; background: rgba(2, 11, 24, 0.5); z-index: 998; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; backdrop-filter: blur(2px); }
+        .overlay.activo { opacity: 1; pointer-events: all; }
+
+        /* ========================
+           CONTENIDO
+        ======================== */
+        .contenido {
+            position: relative;
+            z-index: 1;
+            padding-top: 64px;
+            min-height: 100vh;
+            padding-bottom: 64px;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 32px 32px;
+        }
+
+        /* ========================
+           ENCABEZADO
+        ======================== */
+        .encabezado {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.7s ease both;
+        }
+
+        .encabezado-etiqueta {
+            display: inline-block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--azul-claro);
+            background: rgba(66, 165, 245, 0.08);
+            border: 1px solid rgba(66, 165, 245, 0.2);
+            padding: 6px 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .encabezado h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 300;
+            color: var(--blanco);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .encabezado h1 em { font-style: italic; color: var(--azul-claro); }
+
+        .encabezado p { color: var(--azul-palido); font-size: 0.9rem; font-weight: 300; opacity: 0.8; }
+
+        /* ========================
+           BARRA DE CONTROLES
+        ======================== */
+        .controles {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.7s ease 0.1s both;
+        }
+
+        .buscador {
+            flex: 1;
+            min-width: 220px;
+            position: relative;
+        }
+
+        .buscador input {
+            width: 100%;
+            background: rgba(10, 42, 74, 0.5);
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            padding: 10px 16px 10px 40px;
+            color: var(--blanco);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            outline: none;
+            transition: var(--transicion);
+        }
+
+        .buscador input:focus { border-color: var(--azul-brillante); background: rgba(10, 42, 74, 0.8); box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15); }
+        .buscador input::placeholder { color: rgba(144, 202, 249, 0.3); }
+
+        .buscador-icono {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(144, 202, 249, 0.4);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        .contador {
+            font-size: 0.8rem;
+            color: var(--azul-palido);
+            opacity: 0.7;
+            white-space: nowrap;
+        }
+
+        .contador span {
+            color: var(--azul-claro);
+            font-weight: 500;
+        }
+
+        .btn-actualizar {
+            padding: 10px 20px;
+            background: rgba(21, 101, 192, 0.2);
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            color: var(--azul-claro);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transicion);
+            white-space: nowrap;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-actualizar:hover { background: rgba(21, 101, 192, 0.35); border-color: var(--borde-hover); }
+
+        /* ========================
+           TABLA
+        ======================== */
+        .tabla-contenedor {
+            background: rgba(6, 20, 40, 0.6);
+            border: 1px solid var(--borde);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            animation: fadeInUp 0.7s ease 0.2s both;
+        }
+
+        .tabla-scroll {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 65vh;
+        }
+
+        /* Scrollbar personalizado */
+        .tabla-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .tabla-scroll::-webkit-scrollbar-track { background: rgba(10, 42, 74, 0.3); }
+        .tabla-scroll::-webkit-scrollbar-thumb { background: rgba(66, 165, 245, 0.3); border-radius: 3px; }
+        .tabla-scroll::-webkit-scrollbar-thumb:hover { background: rgba(66, 165, 245, 0.5); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        thead tr {
+            background: rgba(13, 59, 110, 0.9);
+            backdrop-filter: blur(8px);
+        }
+
+        th {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--azul-claro);
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--borde);
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transicion);
+        }
+
+        th:hover { color: var(--blanco); }
+
+        th .sort-icon {
+            margin-left: 6px;
+            opacity: 0.4;
+            font-size: 0.7rem;
+        }
+
+        th.asc .sort-icon::after  { content: ' ▲'; opacity: 1; }
+        th.desc .sort-icon::after { content: ' ▼'; opacity: 1; }
+        th:not(.asc):not(.desc) .sort-icon::after { content: ' ⇅'; }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(66, 165, 245, 0.08);
+            transition: var(--transicion);
+        }
+
+        tbody tr:last-child { border-bottom: none; }
+
+        tbody tr:hover { background: rgba(21, 101, 192, 0.1); }
+
+        tbody tr:nth-child(even) { background: rgba(10, 42, 74, 0.2); }
+        tbody tr:nth-child(even):hover { background: rgba(21, 101, 192, 0.12); }
+
+        td {
+            padding: 12px 16px;
+            font-size: 0.84rem;
+            color: var(--azul-palido);
+            vertical-align: top;
+            max-width: 200px;
+        }
+
+        td.nombre-col {
+            color: var(--blanco);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        td.ministerio-col {
+            max-width: 220px;
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        /* Badge para Sí/No */
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-si {
+            background: rgba(21, 101, 192, 0.25);
+            border: 1px solid rgba(21, 101, 192, 0.5);
+            color: var(--azul-claro);
+        }
+
+        .badge-no {
+            background: rgba(10, 42, 74, 0.4);
+            border: 1px solid var(--borde);
+            color: rgba(144, 202, 249, 0.5);
+        }
+
+        .badge-nuevo {
+            background: rgba(30, 136, 229, 0.2);
+            border: 1px solid rgba(30, 136, 229, 0.4);
+            color: #64B5F6;
+        }
+
+        /* ========================
+           ESTADOS DE CARGA
+        ======================== */
+        .estado {
+            text-align: center;
+            padding: 60px 32px;
+            color: var(--azul-palido);
+            opacity: 0.6;
+        }
+
+        .estado-icono {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .estado p { font-size: 0.9rem; line-height: 1.6; }
+
+        /* Animación de carga */
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(66, 165, 245, 0.15);
+            border-top-color: var(--azul-claro);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ========================
+           ANIMACIONES
+        ======================== */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp   { from { opacity: 0; transform: translateY(24px);  } to { opacity: 1; transform: translateY(0); } }
+
+        /* ========================
+           RESPONSIVE
+        ======================== */
+        @media (max-width: 600px) {
+            .wrapper { padding: 32px 16px; }
+            .topbar-titulo { font-size: 1rem; letter-spacing: 0.03em; }
+            .controles { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="topbar-logo">
+            <img src="VOI-Logo.png" alt="Logo">
+        </div>
+        <p class="topbar-titulo">Alcance Victoria <span>Mexicali Centro</span></p>
+        <button class="hamburger-btn" id="btnHamburguesa" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <!-- PANEL LATERAL -->
+    <aside class="panel-lateral" id="panelLateral">
+        <p class="panel-titulo">Contacto</p>
+        <div class="panel-seccion">
+            <div class="panel-contacto-item">
+                <span class="icono">📞</span>
+                <div>
+                    <p class="panel-contacto-label">Teléfono 1</p>
+                    <a href="tel:+526861234567" class="panel-contacto-valor">+52 686 123 4567</a>
+                </div>
+            </div>
+            <div class="panel-contacto-item">
+                <span class="icono">📱</span>
+                <div>
+                    <p class="panel-contacto-label">Teléfono 2</p>
+                    <a href="tel:+526867654321" class="panel-contacto-valor">+52 686 765 4321</a>
+                </div>
+            </div>
+            <div class="panel-contacto-item">
+                <span class="icono">📘</span>
+                <div>
+                    <p class="panel-contacto-label">Facebook</p>
+                    <a href="https://www.facebook.com/avmxlc" target="_blank" class="panel-contacto-valor">AV - Mxli Centro</a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- CONTENIDO -->
+    <main class="contenido">
+        <div class="wrapper">
+
+            <div class="encabezado">
+                <span class="encabezado-etiqueta">Base de datos</span>
+                <h1>Registros de <em>miembros</em></h1>
+                <p>Información enviada a través del formulario de registro.</p>
+            </div>
+
+            <!-- CONTROLES -->
+            <div class="controles">
+                <div class="buscador">
+                    <span class="buscador-icono">🔍</span>
+                    <input type="text" id="buscador" placeholder="Buscar por nombre, teléfono, ministerio...">
+                </div>
+                <span class="contador" id="contador">Cargando...</span>
+                <button class="btn-actualizar" id="btnActualizar">↻ Actualizar</button>
+            </div>
+
+            <!-- TABLA -->
+            <div class="tabla-contenedor">
+                <div class="tabla-scroll">
+                    <table id="tablaRegistros">
+                        <thead>
+                            <tr>
+                                <th data-col="Nombre y Apellido">Nombre y Apellido<span class="sort-icon"></span></th>
+                                <th data-col="Edad">Edad<span class="sort-icon"></span></th>
+                                <th data-col="Fecha de Nacimiento">Fecha de Nac.<span class="sort-icon"></span></th>
+                                <th data-col="Teléfono">Teléfono<span class="sort-icon"></span></th>
+                                <th data-col="Dirección">Dirección<span class="sort-icon"></span></th>
+                                <th data-col="Ministerio">Ministerio<span class="sort-icon"></span></th>
+                                <th data-col="Unidos Podemos">Unidos Podemos<span class="sort-icon"></span></th>
+                                <th data-col="Nuevo Miembro">Nuevo Miembro<span class="sort-icon"></span></th>
+                                <th data-col="Petición de Oración">Petición<span class="sort-icon"></span></th>
+                                <th data-col="Fecha de Registro">Fecha Registro<span class="sort-icon"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoTabla">
+                            <tr>
+                                <td colspan="10">
+                                    <div class="estado">
+                                        <div class="spinner"></div>
+                                        <p>Cargando registros...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // ========================
+        // MENU HAMBURGUESA
+        // ========================
+        const btnHamburguesa = document.getElementById('btnHamburguesa');
+        const panelLateral   = document.getElementById('panelLateral');
+        const overlay        = document.getElementById('overlay');
+
+        function toggleMenu() {
+            panelLateral.classList.toggle('abierto');
+            btnHamburguesa.classList.toggle('abierto');
+            overlay.classList.toggle('activo');
+        }
+
+        btnHamburguesa.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && panelLateral.classList.contains('abierto'))
+                toggleMenu();
+        });
+
+        // ========================
+        // CONFIGURACION
+        // ========================
+        // Cambia esta URL por la nueva URL de tu Apps Script después de reimplementar
+        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwPJ0aIByXxBhPDHgftEZp-s2_X2WbN2ha3fHxFIXD_c8kLhGF4CSUEn289astwlK5c/exec";
+
+        // Los nombres de columna deben coincidir exactamente con los encabezados de tu hoja
+        const COLUMNAS = [
+            "Nombre y Apellido",
+            "Edad",
+            "Fecha de Nacimiento",
+            "Teléfono",
+            "Dirección",
+            "Ministerio",
+            "Unidos Podemos",
+            "Nuevo Miembro",
+            "Petición de Oración",
+            "Fecha de Registro"
+        ];
+
+        // ========================
+        // ESTADO
+        // ========================
+        let todosLosRegistros = [];
+        let ordenActual       = { col: null, dir: 'asc' };
+
+        // ========================
+        // CARGAR DATOS
+        // ========================
+        function cargarDatos() {
+            const cuerpo   = document.getElementById('cuerpoTabla');
+            const contador = document.getElementById('contador');
+
+            cuerpo.innerHTML = `
+                <tr><td colspan="10">
+                    <div class="estado">
+                        <div class="spinner"></div>
+                        <p>Cargando registros...</p>
+                    </div>
+                </td></tr>`;
+            contador.textContent = 'Cargando...';
+
+            fetch(URL_SCRIPT)
+                .then(r => r.json())
+                .then(datos => {
+                    todosLosRegistros = datos;
+                    filtrarYMostrar();
+                })
+                .catch(() => {
+                    cuerpo.innerHTML = `
+                        <tr><td colspan="10">
+                            <div class="estado">
+                                <span class="estado-icono">⚠️</span>
+                                <p>No se pudieron cargar los datos.<br>
+                                Verifica que el Apps Script esté publicado correctamente.</p>
+                            </div>
+                        </td></tr>`;
+                    contador.textContent = 'Error al cargar';
+                });
+        }
+
+        // ========================
+        // FILTRAR Y MOSTRAR
+        // ========================
+        function filtrarYMostrar() {
+            const busqueda = document.getElementById('buscador').value.toLowerCase().trim();
+            const contador = document.getElementById('contador');
+
+            let registros = todosLosRegistros;
+
+            // Filtrar por búsqueda
+            if (busqueda) {
+                registros = registros.filter(r =>
+                    COLUMNAS.some(col =>
+                        String(r[col] || '').toLowerCase().includes(busqueda)
+                    )
+                );
+            }
+
+            // Ordenar si hay columna activa
+            if (ordenActual.col) {
+                registros = [...registros].sort((a, b) => {
+                    const va = String(a[ordenActual.col] || '').toLowerCase();
+                    const vb = String(b[ordenActual.col] || '').toLowerCase();
+                    const num_a = parseFloat(va), num_b = parseFloat(vb);
+                    const esNum = !isNaN(num_a) && !isNaN(num_b);
+                    const comp  = esNum ? num_a - num_b : va.localeCompare(vb, 'es');
+                    return ordenActual.dir === 'asc' ? comp : -comp;
+                });
+            }
+
+            renderTabla(registros);
+
+            const total    = todosLosRegistros.length;
+            const visibles = registros.length;
+            contador.innerHTML = busqueda
+                ? `Mostrando <span>${visibles}</span> de <span>${total}</span> registros`
+                : `<span>${total}</span> registros en total`;
+        }
+
+        // ========================
+        // RENDERIZAR TABLA
+        // ========================
+        function renderTabla(registros) {
+            const cuerpo = document.getElementById('cuerpoTabla');
+
+            if (registros.length === 0) {
+                cuerpo.innerHTML = `
+                    <tr><td colspan="10">
+                        <div class="estado">
+                            <span class="estado-icono">🔍</span>
+                            <p>No se encontraron registros<br>que coincidan con la búsqueda.</p>
+                        </div>
+                    </td></tr>`;
+                return;
+            }
+
+            cuerpo.innerHTML = registros.map(r => `
+                <tr>
+                    <td class="nombre-col">${escapar(r["Nombre y Apellido"] || '')}</td>
+                    <td>${escapar(r["Edad"] || '')}</td>
+                    <td style="white-space:nowrap">${escapar(r["Fecha de Nacimiento"] || '')}</td>
+                    <td style="white-space:nowrap">${escapar(r["Teléfono"] || '')}</td>
+                    <td>${escapar(r["Dirección"] || '')}</td>
+                    <td class="ministerio-col">${escapar(r["Ministerio"] || '')}</td>
+                    <td>${badge(r["Unidos Podemos"])}</td>
+                    <td>${badgeNuevo(r["Nuevo Miembro"])}</td>
+                    <td style="max-width:200px; font-size:0.78rem; line-height:1.5">${escapar(r["Petición de Oración"] || '')}</td>
+                    <td style="white-space:nowrap; font-size:0.78rem">${escapar(r["Fecha de Registro"] || '')}</td>
+                </tr>
+            `).join('');
+        }
+
+        // ========================
+        // HELPERS
+        // ========================
+        function escapar(texto) {
+            return String(texto)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        function badge(valor) {
+            const v = String(valor || '').trim();
+            if (v === 'Sí') return `<span class="badge badge-si">Sí</span>`;
+            return `<span class="badge badge-no">No</span>`;
+        }
+
+        function badgeNuevo(valor) {
+            const v = String(valor || '').trim();
+            if (v === 'Sí') return `<span class="badge badge-nuevo">✦ Nuevo</span>`;
+            return `<span class="badge badge-no">No</span>`;
+        }
+
+        // ========================
+        // ORDENAR AL HACER CLICK EN ENCABEZADO
+        // ========================
+        document.querySelectorAll('th[data-col]').forEach(th => {
+            th.addEventListener('click', () => {
+                const col = th.dataset.col;
+
+                if (ordenActual.col === col) {
+                    ordenActual.dir = ordenActual.dir === 'asc' ? 'desc' : 'asc';
+                } else {
+                    ordenActual.col = col;
+                    ordenActual.dir = 'asc';
+                }
+
+                // Actualizar clases de los encabezados
+                document.querySelectorAll('th[data-col]').forEach(h => {
+                    h.classList.remove('asc', 'desc');
+                });
+                th.classList.add(ordenActual.dir);
+
+                filtrarYMostrar();
+            });
+        });
+
+        // ========================
+        // BUSCADOR EN TIEMPO REAL
+        // ========================
+        document.getElementById('buscador').addEventListener('input', filtrarYMostrar);
+
+        // ========================
+        // BOTON ACTUALIZAR
+        // ========================
+        document.getElementById('btnActualizar').addEventListener('click', cargarDatos);
+
+        // ========================
+        // CARGA INICIAL
+        // ========================
+        cargarDatos();
+    </script>
+
+</body>
+</html>
