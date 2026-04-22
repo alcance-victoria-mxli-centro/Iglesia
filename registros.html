@@ -479,13 +479,27 @@
 
     <!-- PANEL LATERAL -->
     <aside class="panel-lateral" id="panelLateral">
-        <p class="panel-titulo">Registro</p>
+        <p class="panel-titulo">Contacto</p>
         <div class="panel-seccion">
             <div class="panel-contacto-item">
-                <span class="icono">✝</span>
+                <span class="icono">📞</span>
                 <div>
-                    <p class="panel-contacto-label">Regresar al Registro</p>
-                    <a href="index.html" class="panel-contacto-valor">Regresar al Registro</a>
+                    <p class="panel-contacto-label">Teléfono 1</p>
+                    <a href="tel:+526861234567" class="panel-contacto-valor">+52 686 123 4567</a>
+                </div>
+            </div>
+            <div class="panel-contacto-item">
+                <span class="icono">📱</span>
+                <div>
+                    <p class="panel-contacto-label">Teléfono 2</p>
+                    <a href="tel:+526867654321" class="panel-contacto-valor">+52 686 765 4321</a>
+                </div>
+            </div>
+            <div class="panel-contacto-item">
+                <span class="icono">📘</span>
+                <div>
+                    <p class="panel-contacto-label">Facebook</p>
+                    <a href="https://www.facebook.com/avmxlc" target="_blank" class="panel-contacto-valor">AV - Mxli Centro</a>
                 </div>
             </div>
         </div>
@@ -573,7 +587,7 @@
         // CONFIGURACION
         // ========================
         // Cambia esta URL por la nueva URL de tu Apps Script después de reimplementar
-        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxAFpdsy73_UWe0z6DLAouJKHLwnahOIr5USKP8aBBEOO3J57-7GXAbHmWk_mtR1Pl5/exec";
+        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwPJ0aIByXxBhPDHgftEZp-s2_X2WbN2ha3fHxFIXD_c8kLhGF4CSUEn289astwlK5c/exec";
 
         // Los nombres deben coincidir EXACTAMENTE con las claves del doGet
         const COLUMNAS = [
@@ -688,16 +702,16 @@
 
             cuerpo.innerHTML = registros.map(r => `
                 <tr>
-                    <td class="nombre-col">${escapar(r["Nombre y Apellido"] || '')}</td>
+                    <td class="nombre-col" style="white-space:normal; min-width:160px">${escapar(r["Nombre y Apellido"] || '')}</td>
                     <td>${escapar(r["Edad"] || '')}</td>
                     <td style="white-space:nowrap">${escapar(r["Fecha de Nacimiento"] || '')}</td>
                     <td style="white-space:nowrap">${escapar(r["Telefono"] || '')}</td>
                     <td>${escapar(r["Direccion"] || '')}</td>
                     <td class="ministerio-col">${escapar(r["Ministerio"] || '')}</td>
                     <td>${badge(r["Unidos Podemos"])}</td>
-                    <td>${badgeNuevo(r["Nuevo Miembro"])}</td>
+                    <td>${badge(r["Nuevo Miembro"])}</td>
                     <td style="max-width:200px; font-size:0.78rem; line-height:1.5">${escapar(r["Peticion de Oracion"] || '')}</td>
-                    <td style="white-space:nowrap; font-size:0.78rem">${escapar(r["Fecha de Registro"] || '')}</td>
+                    <td style="white-space:nowrap; font-size:0.78rem">${formatearFecha(r["Fecha de Registro"] || '')}</td>
                 </tr>
             `).join('');
         }
@@ -712,19 +726,21 @@
                 .replace(/>/g, '&gt;');
         }
 
-        function badge(valor) {
-            // Tolerante a variaciones de codificación del acento en "Sí"
-            const v = String(valor || '').trim();
-            const esSi = v === 'Sí' || v === 'Si' || v === 'sí' || v === 'si' || v.charCodeAt(0) === 83;
-            if (esSi && v.length <= 3) return `<span class="badge badge-si">Sí</span>`;
-            if (v.toLowerCase().startsWith('s')) return `<span class="badge badge-si">Sí</span>`;
-            return `<span class="badge badge-no">No</span>`;
+        // Convierte cualquier formato de fecha a DD/MM/YYYY
+        function formatearFecha(valor) {
+            if (!valor) return '';
+            const fecha = new Date(valor);
+            if (isNaN(fecha.getTime())) return escapar(valor); // si no es fecha válida, muestra tal cual
+            const d = String(fecha.getDate()).padStart(2, '0');
+            const m = String(fecha.getMonth() + 1).padStart(2, '0');
+            const a = fecha.getFullYear();
+            return `${d}/${m}/${a}`;
         }
 
-        function badgeNuevo(valor) {
+        function badge(valor) {
             const v = String(valor || '').trim();
             const esSi = v === 'Sí' || v === 'Si' || v === 'sí' || v === 'si';
-            if (esSi || v.toLowerCase().startsWith('s')) return `<span class="badge badge-nuevo">✦ Nuevo</span>`;
+            if (esSi || v.toLowerCase().startsWith('s')) return `<span class="badge badge-si">Sí</span>`;
             return `<span class="badge badge-no">No</span>`;
         }
 
