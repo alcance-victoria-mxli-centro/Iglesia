@@ -521,19 +521,18 @@
                             <tr>
                                 <th data-col="Nombre y Apellido">Nombre y Apellido<span class="sort-icon"></span></th>
                                 <th data-col="Edad">Edad<span class="sort-icon"></span></th>
-                                <th data-col="Fecha de Nacimiento">Fecha de Nac.<span class="sort-icon"></span></th>
-                                <th data-col="Teléfono">Teléfono<span class="sort-icon"></span></th>
-                                <th data-col="Dirección">Dirección<span class="sort-icon"></span></th>
+                                <th data-col="Telefono">Teléfono<span class="sort-icon"></span></th>
+                                <th data-col="Direccion">Dirección<span class="sort-icon"></span></th>
                                 <th data-col="Ministerio">Ministerio<span class="sort-icon"></span></th>
                                 <th data-col="Unidos Podemos">Unidos Podemos<span class="sort-icon"></span></th>
                                 <th data-col="Nuevo Miembro">Nuevo Miembro<span class="sort-icon"></span></th>
-                                <th data-col="Petición de Oración">Petición<span class="sort-icon"></span></th>
-                                <th data-col="Fecha de Registro">Fecha Registro<span class="sort-icon"></span></th>
+                                <th data-col="Peticion de Oracion">Petición<span class="sort-icon"></span></th>
+                                <th data-col="Informacion">Información<span class="sort-icon"></span></th>
                             </tr>
                         </thead>
                         <tbody id="cuerpoTabla">
                             <tr>
-                                <td colspan="10">
+                                <td colspan="9">
                                     <div class="estado">
                                         <div class="spinner"></div>
                                         <p>Cargando registros...</p>
@@ -579,14 +578,13 @@
         const COLUMNAS = [
             "Nombre y Apellido",
             "Edad",
-            "Fecha de Nacimiento",
             "Telefono",
             "Direccion",
             "Ministerio",
             "Unidos Podemos",
             "Nuevo Miembro",
             "Peticion de Oracion",
-            "Fecha de Registro"
+            "Informacion"
         ];
 
         // ========================
@@ -603,7 +601,7 @@
             const contador = document.getElementById('contador');
 
             cuerpo.innerHTML = `
-                <tr><td colspan="10">
+                <tr><td colspan="9">
                     <div class="estado">
                         <div class="spinner"></div>
                         <p>Cargando registros...</p>
@@ -619,7 +617,7 @@
                 })
                 .catch(() => {
                     cuerpo.innerHTML = `
-                        <tr><td colspan="10">
+                        <tr><td colspan="9">
                             <div class="estado">
                                 <span class="estado-icono">⚠️</span>
                                 <p>No se pudieron cargar los datos.<br>
@@ -677,7 +675,7 @@
 
             if (registros.length === 0) {
                 cuerpo.innerHTML = `
-                    <tr><td colspan="10">
+                    <tr><td colspan="9">
                         <div class="estado">
                             <span class="estado-icono">🔍</span>
                             <p>No se encontraron registros<br>que coincidan con la búsqueda.</p>
@@ -690,14 +688,13 @@
                 <tr>
                     <td class="nombre-col" style="white-space:normal; min-width:160px">${escapar(r["Nombre y Apellido"] || '')}</td>
                     <td>${escapar(r["Edad"] || '')}</td>
-                    <td style="white-space:nowrap">${escapar(r["Fecha de Nacimiento"] || '')}</td>
                     <td style="white-space:nowrap">${escapar(r["Telefono"] || '')}</td>
                     <td>${escapar(r["Direccion"] || '')}</td>
                     <td class="ministerio-col">${escapar(r["Ministerio"] || '')}</td>
                     <td>${badge(r["Unidos Podemos"])}</td>
                     <td>${badge(r["Nuevo Miembro"])}</td>
                     <td style="max-width:200px; font-size:0.78rem; line-height:1.5">${escapar(r["Peticion de Oracion"] || '')}</td>
-                    <td style="white-space:nowrap; font-size:0.78rem">${formatearFecha(r["Fecha de Registro"] || '')}</td>
+                    <td style="max-width:200px; font-size:0.78rem; line-height:1.5">${escapar(r["Informacion"] || '')}</td>
                 </tr>
             `).join('');
         }
@@ -710,17 +707,6 @@
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;');
-        }
-
-        // Convierte cualquier formato de fecha a DD/MM/YYYY
-        function formatearFecha(valor) {
-            if (!valor) return '';
-            const fecha = new Date(valor);
-            if (isNaN(fecha.getTime())) return escapar(valor); // si no es fecha válida, muestra tal cual
-            const d = String(fecha.getDate()).padStart(2, '0');
-            const m = String(fecha.getMonth() + 1).padStart(2, '0');
-            const a = fecha.getFullYear();
-            return `${d}/${m}/${a}`;
         }
 
         function badge(valor) {
