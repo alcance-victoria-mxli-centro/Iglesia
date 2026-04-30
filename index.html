@@ -415,10 +415,7 @@
                                 <label>Edad</label>
                                 <input id="edad" type="number" placeholder="Ej. 28" min="1" max="120">
                             </div>
-                            <div class="grupo">
-                                <label>Fecha de nacimiento</label>
-                                <input id="fechaNacimiento" type="date">
-                            </div>
+
                         </div>
                     </div>
  
@@ -442,12 +439,15 @@
                         <p class="seccion-titulo">Ministerio</p>
  
                         <label style="margin-bottom: 12px; display: block;">
-                            Selecciona los ministerios en los que participas
-                            <span style="font-size:0.72rem; color: rgba(144,202,249,0.5); font-weight:300; margin-left:6px;">(deja las casillas vacías si no perteneces a ninguno)</span>
+                            Selecciona los ministerios en los que participa el miembro
                         </label>
  
                         <!-- Agrega o quita ministerios aquí -->
                         <div class="ministerios-grid" id="ministeriosGrid">
+                            <div class="ministerio-item">
+                                <input type="checkbox" id="min-ninguno" value="Ninguno">
+                                <label for="min-ninguno">Ninguno</label>
+                            </div>
                             <div class="ministerio-item">
                                 <input type="checkbox" id="min-alabanza" value="Alabanza">
                                 <label for="min-alabanza">Alabanza</label>
@@ -488,6 +488,14 @@
                                 <input type="checkbox" id="min-mujeres" value="Mujeres Unidas en Ministerio">
                                 <label for="min-mujeres">Mujeres Unidas en Ministerio</label>
                             </div>
+                            <div class="ministerio-item">
+                                <input type="checkbox" id="min-home" value="Home">
+                                <label for="min-home">Home</label>
+                            </div>
+                            <div class="ministerio-item">
+                                <input type="checkbox" id="min-guarderia" value="Guardería">
+                                <label for="min-guarderia">Guardería</label>
+                            </div>
                         </div>
  
                         <!-- UNIDOS PODEMOS -->
@@ -513,8 +521,17 @@
                     <div class="seccion">
                         <p class="seccion-titulo">Petición de oración</p>
                         <div class="grupo">
-                            <label>Cuéntanos tu petición</label>
-                            <textarea id="peticion" placeholder="Escribe aquí tu petición de oración. Toda información es confidencial y será tratada con respeto..."></textarea>
+                            <label>Petición de oración del miembro</label>
+                            <textarea id="peticion" placeholder="Escribe aquí la petición de oración..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- INFORMACION DE LA PERSONA -->
+                    <div class="seccion">
+                        <p class="seccion-titulo">Información adicional</p>
+                        <div class="grupo">
+                            <label>Información de la persona</label>
+                            <textarea id="informacion" placeholder="Notas adicionales, observaciones o información relevante del miembro..."></textarea>
                         </div>
                     </div>
  
@@ -572,32 +589,23 @@
  
         formulario.addEventListener('submit', function(e) {
             e.preventDefault();
- 
-            // Fecha en texto legible
-            const fechaInput = document.getElementById('fechaNacimiento').value;
-            let fechaEnTexto = "";
-            if (fechaInput) {
-                const meses  = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
-                const partes = fechaInput.split('-');
-                fechaEnTexto = `${partes[2]} de ${meses[parseInt(partes[1]) - 1]} de ${partes[0]}`;
-            }
- 
+
             // Recoger todos los ministerios marcados y unirlos con coma
             const checkboxesMinisterio      = document.querySelectorAll('#ministeriosGrid input[type="checkbox"]:checked');
             const ministeriosSeleccionados  = Array.from(checkboxesMinisterio)
                 .map(cb => cb.value)
                 .join(', ');
- 
+
             const datos = {
                 nombre:          document.getElementById('nombre').value.trim(),
                 edad:            document.getElementById('edad').value.trim(),
-                fechaNacimiento: fechaEnTexto,
                 telefono:        document.getElementById('telefono').value.trim(),
                 direccion:       document.getElementById('direccion').value.trim(),
                 ministerio:      ministeriosSeleccionados || "Ninguno",
                 unidospodemos:   document.getElementById('miCasilla').checked ? "Sí" : "No",
                 nuevoMiembro:    document.getElementById('nuevoMiembro').checked ? "Sí" : "No",
-                peticion:        document.getElementById('peticion').value.trim()
+                peticion:        document.getElementById('peticion').value.trim(),
+                informacion:     document.getElementById('informacion').value.trim()
             };
  
             btnEnviar.textContent       = 'Enviando...';
