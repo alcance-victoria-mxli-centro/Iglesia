@@ -22,10 +22,10 @@
             --sombra:           0 8px 32px rgba(2, 11, 24, 0.6);
             --transicion:       all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
- 
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
- 
+
         body {
             font-family: 'DM Sans', sans-serif;
             background-color: var(--azul-profundo);
@@ -33,7 +33,7 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
- 
+
         body::before {
             content: '';
             position: fixed;
@@ -45,7 +45,7 @@
             pointer-events: none;
             z-index: 0;
         }
- 
+
         /* TOP BAR */
         .topbar {
             position: fixed;
@@ -61,10 +61,10 @@
             justify-content: space-between;
             padding: 0 32px;
         }
- 
+
         .topbar-logo { width: 30px; height: 60px; flex-shrink: 0; }
         .topbar-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
- 
+
         .topbar-titulo {
             position: absolute;
             left: 50%;
@@ -77,9 +77,9 @@
             white-space: nowrap;
             pointer-events: none;
         }
- 
+
         .topbar-titulo span { color: var(--azul-claro); }
- 
+
         /* HAMBURGUESA */
         .hamburger-btn {
             width: 40px; height: 40px;
@@ -95,13 +95,13 @@
             transition: var(--transicion);
             margin-left: 8px;
         }
- 
+
         .hamburger-btn:hover { background: rgba(66, 165, 245, 0.2); border-color: var(--borde-hover); }
         .hamburger-btn span { display: block; width: 18px; height: 1.5px; background: var(--azul-claro); border-radius: 2px; transition: var(--transicion); }
         .hamburger-btn.abierto span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
         .hamburger-btn.abierto span:nth-child(2) { opacity: 0; transform: scaleX(0); }
         .hamburger-btn.abierto span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
- 
+
         /* PANEL LATERAL */
         .panel-lateral {
             position: fixed;
@@ -116,9 +116,9 @@
             padding: 32px 24px;
             overflow-y: auto;
         }
- 
+
         .panel-lateral.abierto { right: 0; }
- 
+
         .panel-titulo {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.2rem;
@@ -128,9 +128,9 @@
             border-bottom: 1px solid var(--borde);
             letter-spacing: 0.04em;
         }
- 
+
         .panel-seccion { margin-bottom: 32px; }
- 
+
         .panel-contacto-item {
             display: flex;
             align-items: flex-start;
@@ -142,25 +142,25 @@
             margin-bottom: 12px;
             transition: var(--transicion);
         }
- 
+
         .panel-contacto-item:hover { background: rgba(10, 42, 74, 0.6); border-color: var(--borde-hover); }
         .panel-contacto-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--azul-palido); opacity: 0.6; margin-bottom: 4px; }
         .panel-contacto-valor { color: var(--blanco); font-size: 0.88rem; text-decoration: none; font-weight: 400; transition: var(--transicion); display: block; word-break: break-all; }
         .panel-contacto-valor:hover { color: var(--azul-claro); }
- 
+
         .icono { width: 32px; height: 32px; background: rgba(66, 165, 245, 0.1); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
- 
+
         /* OVERLAY */
         .overlay { position: fixed; inset: 0; background: rgba(2, 11, 24, 0.5); z-index: 998; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; backdrop-filter: blur(2px); }
         .overlay.activo { opacity: 1; pointer-events: all; }
- 
+
         /* CONTENIDO */
         .contenido { position: relative; z-index: 1; padding-top: 64px; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding-bottom: 64px; }
         .formulario-wrapper { width: 100%; max-width: 720px; padding: 48px 32px 32px; }
- 
+
         /* ENCABEZADO */
         .encabezado { text-align: center; margin-bottom: 48px; animation: fadeInDown 0.7s ease both; }
- 
+
         .encabezado-etiqueta {
             display: inline-block;
             font-size: 0.7rem;
@@ -173,16 +173,16 @@
             border-radius: 20px;
             margin-bottom: 20px;
         }
- 
+
         .encabezado h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; color: var(--blanco); line-height: 1.2; margin-bottom: 12px; }
         .encabezado h1 em { font-style: italic; color: var(--azul-claro); }
         .encabezado p { color: var(--azul-palido); font-size: 0.9rem; font-weight: 300; opacity: 0.8; line-height: 1.6; }
- 
+
         /* TARJETA */
         .tarjeta { background: rgba(6, 20, 40, 0.6); border: 1px solid var(--borde); border-radius: 20px; padding: 40px; backdrop-filter: blur(12px); animation: fadeInUp 0.7s ease 0.2s both; box-shadow: var(--sombra); }
- 
+
         .seccion { margin-bottom: 36px; }
- 
+
         .seccion-titulo {
             font-size: 0.68rem;
             text-transform: uppercase;
@@ -195,16 +195,16 @@
             align-items: center;
             gap: 10px;
         }
- 
+
         .seccion-titulo::before { content: ''; display: inline-block; width: 4px; height: 4px; background: var(--azul-claro); border-radius: 50%; }
- 
+
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grupo { display: flex; flex-direction: column; gap: 8px; }
         .grupo.completo { grid-column: 1 / -1; }
- 
+
         label { font-size: 0.78rem; font-weight: 500; color: var(--azul-palido); letter-spacing: 0.03em; }
         label .requerido { color: var(--azul-brillante); margin-left: 3px; }
- 
+
         input, textarea, select {
             width: 100%;
             background: rgba(10, 42, 74, 0.5);
@@ -220,138 +220,58 @@
             appearance: none;
             -webkit-appearance: none;
         }
- 
+
         input::placeholder, textarea::placeholder { color: rgba(144, 202, 249, 0.3); font-weight: 300; }
         input:hover, textarea:hover, select:hover { border-color: rgba(66, 165, 245, 0.4); background: rgba(10, 42, 74, 0.7); }
         input:focus, textarea:focus, select:focus { border-color: var(--azul-brillante); background: rgba(10, 42, 74, 0.8); box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15); }
- 
+
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6) sepia(1) saturate(2) hue-rotate(185deg); cursor: pointer; }
         textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
         select option { background: var(--azul-oscuro); color: var(--blanco); }
- 
-        /* ========================
-           MINISTERIOS — CHECKBOXES MULTIPLES
-        ======================== */
-        .ministerios-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 4px;
-        }
- 
-        .ministerio-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            background: rgba(10, 42, 74, 0.4);
-            border: 1px solid var(--borde);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transicion);
-        }
- 
+
+        /* MINISTERIOS */
+        .ministerios-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+
+        .ministerio-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(10, 42, 74, 0.4); border: 1px solid var(--borde); border-radius: 8px; cursor: pointer; transition: var(--transicion); }
+
         .ministerio-item:hover { background: rgba(10, 42, 74, 0.7); border-color: rgba(66, 165, 245, 0.4); }
- 
-        .ministerio-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            min-width: 16px;
-            padding: 0;
-            cursor: pointer;
-            accent-color: var(--azul-brillante);
-            appearance: checkbox;
-            -webkit-appearance: checkbox;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            flex-shrink: 0;
-        }
- 
+
+        .ministerio-item input[type="checkbox"] { width: 16px; height: 16px; min-width: 16px; padding: 0; cursor: pointer; accent-color: var(--azul-brillante); appearance: checkbox; -webkit-appearance: checkbox; background: transparent; border: none; box-shadow: none; flex-shrink: 0; }
+
         .ministerio-item input[type="checkbox"]:focus { box-shadow: none; border: none; }
- 
-        .ministerio-item label {
-            font-size: 0.82rem;
-            color: var(--azul-palido);
-            cursor: pointer;
-            font-weight: 400;
-            letter-spacing: 0;
-            margin: 0;
-        }
- 
+
+        .ministerio-item label { font-size: 0.82rem; color: var(--azul-palido); cursor: pointer; font-weight: 400; letter-spacing: 0; margin: 0; }
+
         .ministerio-item:has(input:checked) { background: rgba(21, 101, 192, 0.2); border-color: var(--azul-brillante); }
         .ministerio-item:has(input:checked) label { color: var(--blanco); }
- 
-        /* ========================
-           CHECKBOX UNIDOS PODEMOS
-        ======================== */
-        .up-grupo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            background: rgba(10, 42, 74, 0.4);
-            border: 1px solid var(--borde);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: var(--transicion);
-            margin-top: 4px;
-        }
- 
+
+        /* CHECKBOX UP */
+        .up-grupo { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(10, 42, 74, 0.4); border: 1px solid var(--borde); border-radius: 10px; cursor: pointer; transition: var(--transicion); margin-top: 4px; }
+
         .up-grupo:hover { background: rgba(10, 42, 74, 0.7); border-color: rgba(66, 165, 245, 0.4); }
- 
-        .up-grupo input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            min-width: 18px;
-            padding: 0;
-            cursor: pointer;
-            accent-color: var(--azul-brillante);
-            appearance: checkbox;
-            -webkit-appearance: checkbox;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            flex-shrink: 0;
-        }
- 
+
+        .up-grupo input[type="checkbox"] { width: 18px; height: 18px; min-width: 18px; padding: 0; cursor: pointer; accent-color: var(--azul-brillante); appearance: checkbox; -webkit-appearance: checkbox; background: transparent; border: none; box-shadow: none; flex-shrink: 0; }
+
         .up-grupo input[type="checkbox"]:focus { box-shadow: none; border: none; }
- 
+
         .up-grupo span { font-size: 0.88rem; color: var(--azul-palido); font-weight: 400; line-height: 1.4; }
- 
+
         .up-grupo:has(input:checked) { background: rgba(21, 101, 192, 0.2); border-color: var(--azul-brillante); }
         .up-grupo:has(input:checked) span { color: var(--blanco); }
- 
+
         /* BOTON */
-        .btn-enviar {
-            width: 100%;
-            padding: 16px 32px;
-            background: linear-gradient(135deg, var(--azul-acento) 0%, var(--azul-brillante) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: var(--transicion);
-            position: relative;
-            overflow: hidden;
-            margin-top: 8px;
-        }
- 
+        .btn-enviar { width: 100%; padding: 16px 32px; background: linear-gradient(135deg, var(--azul-acento) 0%, var(--azul-brillante) 100%); color: white; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: var(--transicion); position: relative; overflow: hidden; margin-top: 8px; }
+
         .btn-enviar::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%); opacity: 0; transition: var(--transicion); }
         .btn-enviar:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30, 136, 229, 0.4); }
         .btn-enviar:hover::before { opacity: 1; }
         .btn-enviar:active { transform: translateY(0); }
- 
+
         .nota { text-align: center; margin-top: 24px; font-size: 0.75rem; color: var(--azul-palido); opacity: 0.5; line-height: 1.6; }
- 
+
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp   { from { opacity: 0; transform: translateY(24px);  } to { opacity: 1; transform: translateY(0); } }
- 
+
         @media (max-width: 600px) {
             .grid-2 { grid-template-columns: 1fr; }
             .ministerios-grid { grid-template-columns: 1fr; }
@@ -362,7 +282,7 @@
     </style>
 </head>
 <body>
- 
+
     <!-- TOP BAR -->
     <header class="topbar">
         <div class="topbar-logo">
@@ -373,8 +293,8 @@
             <span></span><span></span><span></span>
         </button>
     </header>
- 
-    <!-- PANEL LATERAL -->
+
+    <!-- PANEL LATERAL — igual que el tuyo, sin cambios -->
     <aside class="panel-lateral" id="panelLateral">
         <p class="panel-titulo">✝ Contacto</p>
         <div class="panel-seccion">
@@ -396,22 +316,22 @@
             </div>
         </div>
     </aside>
- 
+
     <div class="overlay" id="overlay"></div>
- 
+
     <!-- FORMULARIO -->
     <main class="contenido">
         <div class="formulario-wrapper">
- 
+
             <div class="encabezado">
                 <span class="encabezado-etiqueta">Registro de miembros</span>
                 <h1>Comparte tu <em>información</em></h1>
                 <p>Completa el formulario para registrarte y<br>enviarnos tu petición de oración.</p>
             </div>
- 
+
             <div class="tarjeta">
                 <form id="formularioRegistro">
- 
+
                     <!-- DATOS PERSONALES -->
                     <div class="seccion">
                         <p class="seccion-titulo">Datos personales</p>
@@ -424,10 +344,9 @@
                                 <label>Edad</label>
                                 <input id="edad" type="number" placeholder="Ej. 28" min="1" max="120">
                             </div>
-
                         </div>
                     </div>
- 
+
                     <!-- CONTACTO -->
                     <div class="seccion">
                         <p class="seccion-titulo">Información de contacto</p>
@@ -436,22 +355,26 @@
                                 <label>Número de teléfono <span class="requerido">*</span></label>
                                 <input id="telefono" type="tel" placeholder="Ej. +52 55 1234 5678" required>
                             </div>
+                            <!-- ↓ CAMPO NUEVO: CORREO -->
+                            <div class="grupo completo">
+                                <label>Correo electrónico</label>
+                                <input id="correo" type="email" placeholder="Ej. correo@ejemplo.com">
+                            </div>
                             <div class="grupo completo">
                                 <label>Dirección</label>
                                 <input id="direccion" type="text" placeholder="Calle, número, colonia, ciudad">
                             </div>
                         </div>
                     </div>
- 
+
                     <!-- MINISTERIOS -->
                     <div class="seccion">
                         <p class="seccion-titulo">Ministerio</p>
- 
+
                         <label style="margin-bottom: 12px; display: block;">
                             Selecciona los ministerios en los que participa el miembro
                         </label>
- 
-                        <!-- Agrega o quita ministerios aquí -->
+
                         <div class="ministerios-grid" id="ministeriosGrid">
                             <div class="ministerio-item">
                                 <input type="checkbox" id="min-ninguno" value="Ninguno">
@@ -506,7 +429,7 @@
                                 <label for="min-guarderia">Guardería</label>
                             </div>
                         </div>
- 
+
                         <!-- UNIDOS PODEMOS -->
                         <div style="margin-top: 16px;">
                             <label style="margin-bottom: 8px; display: block;">Unidos Podemos</label>
@@ -515,7 +438,7 @@
                                 <span>Soy miembro de Unidos Podemos</span>
                             </div>
                         </div>
- 
+
                         <!-- NUEVO MIEMBRO -->
                         <div style="margin-top: 12px;">
                             <label style="margin-bottom: 8px; display: block;">Nuevo Miembro</label>
@@ -525,7 +448,7 @@
                             </div>
                         </div>
                     </div>
- 
+
                     <!-- PETICION DE ORACION -->
                     <div class="seccion">
                         <p class="seccion-titulo">Petición de oración</p>
@@ -543,51 +466,51 @@
                             <textarea id="informacion" placeholder="Notas adicionales, observaciones o información relevante del miembro..."></textarea>
                         </div>
                     </div>
- 
+
                     <!-- MENSAJE DE ESTADO -->
                     <div id="mensajeEstado" style="display:none; text-align:center; padding:14px; border-radius:10px; margin-bottom:16px; font-size:0.88rem;"></div>
- 
+
                     <!-- BOTON -->
                     <button type="submit" class="btn-enviar" id="btnEnviar">
                         Enviar registro
                     </button>
- 
+
                     <p class="nota">
                         Los campos marcados con <strong style="color:var(--azul-brillante)">*</strong> son obligatorios.<br>
                         Tu información es confidencial y no será compartida.
                     </p>
- 
+
                 </form>
             </div>
         </div>
     </main>
- 
+
     <script>
         // MENU HAMBURGUESA
         const btnHamburguesa = document.getElementById('btnHamburguesa');
         const panelLateral   = document.getElementById('panelLateral');
         const overlay        = document.getElementById('overlay');
- 
+
         function toggleMenu() {
             panelLateral.classList.toggle('abierto');
             btnHamburguesa.classList.toggle('abierto');
             overlay.classList.toggle('activo');
         }
- 
+
         btnHamburguesa.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape' && panelLateral.classList.contains('abierto'))
                 toggleMenu();
         });
- 
+
         // ENVIO A GOOGLE SHEETS
         const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbycJFA-NkZaXmrY7ev-f8a2ZYZLid59zvhIbqf8a99sAjvFi8KfAKTF5frj9O-Egh12/exec";
- 
+
         const formulario    = document.getElementById('formularioRegistro');
         const btnEnviar     = document.getElementById('btnEnviar');
         const mensajeEstado = document.getElementById('mensajeEstado');
- 
+
         function mostrarMensaje(texto, exito) {
             mensajeEstado.style.display    = 'block';
             mensajeEstado.style.background = exito ? 'rgba(21, 101, 192, 0.2)' : 'rgba(200, 50, 50, 0.2)';
@@ -595,32 +518,32 @@
             mensajeEstado.style.color      = exito ? '#90CAF9' : '#ff8080';
             mensajeEstado.textContent      = texto;
         }
- 
+
         formulario.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Recoger todos los ministerios marcados y unirlos con coma
-            const checkboxesMinisterio      = document.querySelectorAll('#ministeriosGrid input[type="checkbox"]:checked');
-            const ministeriosSeleccionados  = Array.from(checkboxesMinisterio)
+            const checkboxesMinisterio     = document.querySelectorAll('#ministeriosGrid input[type="checkbox"]:checked');
+            const ministeriosSeleccionados = Array.from(checkboxesMinisterio)
                 .map(cb => cb.value)
                 .join(', ');
 
             const datos = {
-                nombre:          document.getElementById('nombre').value.trim(),
-                edad:            document.getElementById('edad').value.trim(),
-                telefono:        document.getElementById('telefono').value.trim(),
-                direccion:       document.getElementById('direccion').value.trim(),
-                ministerio:      ministeriosSeleccionados || "Ninguno",
-                unidospodemos:   document.getElementById('miCasilla').checked ? "Sí" : "No",
-                nuevoMiembro:    document.getElementById('nuevoMiembro').checked ? "Sí" : "No",
-                peticion:        document.getElementById('peticion').value.trim(),
-                informacion:     document.getElementById('informacion').value.trim()
+                nombre:        document.getElementById('nombre').value.trim(),
+                edad:          document.getElementById('edad').value.trim(),
+                telefono:      document.getElementById('telefono').value.trim(),
+                correo:        document.getElementById('correo').value.trim(),   // ← NUEVO
+                direccion:     document.getElementById('direccion').value.trim(),
+                ministerio:    ministeriosSeleccionados || "Ninguno",
+                unidospodemos: document.getElementById('miCasilla').checked ? "Sí" : "No",
+                nuevoMiembro:  document.getElementById('nuevoMiembro').checked ? "Sí" : "No",
+                peticion:      document.getElementById('peticion').value.trim(),
+                informacion:   document.getElementById('informacion').value.trim()
             };
- 
+
             btnEnviar.textContent       = 'Enviando...';
             btnEnviar.disabled          = true;
             mensajeEstado.style.display = 'none';
- 
+
             fetch(URL_SCRIPT, {
                 method:  'POST',
                 mode:    'no-cors',
@@ -630,7 +553,6 @@
             .then(() => {
                 mostrarMensaje('✓ Registro enviado correctamente. ¡Gracias!', true);
                 formulario.reset();
-                // Desmarcar checkboxes de ministerio manualmente
                 document.querySelectorAll('#ministeriosGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
             })
             .catch(() => {
@@ -642,6 +564,6 @@
             });
         });
     </script>
- 
+
 </body>
 </html>
