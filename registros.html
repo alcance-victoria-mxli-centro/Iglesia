@@ -522,6 +522,7 @@
                                 <th data-col="Nombre y Apellido">Nombre y Apellido<span class="sort-icon"></span></th>
                                 <th data-col="Edad">Edad<span class="sort-icon"></span></th>
                                 <th data-col="Telefono">Teléfono<span class="sort-icon"></span></th>
+                                <th data-col="Correo">Correo<span class="sort-icon"></span></th>
                                 <th data-col="Direccion">Dirección<span class="sort-icon"></span></th>
                                 <th data-col="Ministerio">Ministerio<span class="sort-icon"></span></th>
                                 <th data-col="Unidos Podemos">Unidos Podemos<span class="sort-icon"></span></th>
@@ -532,7 +533,7 @@
                         </thead>
                         <tbody id="cuerpoTabla">
                             <tr>
-                                <td colspan="9">
+                                <td colspan="10">
                                     <div class="estado">
                                         <div class="spinner"></div>
                                         <p>Cargando registros...</p>
@@ -572,13 +573,14 @@
         // CONFIGURACION
         // ========================
         // Cambia esta URL por la nueva URL de tu Apps Script después de reimplementar
-        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbycJFA-NkZaXmrY7ev-f8a2ZYZLid59zvhIbqf8a99sAjvFi8KfAKTF5frj9O-Egh12/exec";
+        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbyLPI_k70d676QS5s43JohD9A3LfV_AyLZmdlqK9JsXgXpqI_00nUdJ1knBA5fxUhg/exec";
 
         // Los nombres deben coincidir EXACTAMENTE con las claves del doGet
         const COLUMNAS = [
             "Nombre y Apellido",
             "Edad",
             "Telefono",
+            "Correo",
             "Direccion",
             "Ministerio",
             "Unidos Podemos",
@@ -601,7 +603,7 @@
             const contador = document.getElementById('contador');
 
             cuerpo.innerHTML = `
-                <tr><td colspan="9">
+                <tr><td colspan="10">
                     <div class="estado">
                         <div class="spinner"></div>
                         <p>Cargando registros...</p>
@@ -617,7 +619,7 @@
                 })
                 .catch(() => {
                     cuerpo.innerHTML = `
-                        <tr><td colspan="9">
+                        <tr><td colspan="10">
                             <div class="estado">
                                 <span class="estado-icono">⚠️</span>
                                 <p>No se pudieron cargar los datos.<br>
@@ -675,7 +677,7 @@
 
             if (registros.length === 0) {
                 cuerpo.innerHTML = `
-                    <tr><td colspan="9">
+                    <tr><td colspan="10">
                         <div class="estado">
                             <span class="estado-icono">🔍</span>
                             <p>No se encontraron registros<br>que coincidan con la búsqueda.</p>
@@ -689,6 +691,7 @@
                     <td class="nombre-col" style="white-space:normal; min-width:160px">${escapar(r["Nombre y Apellido"] || '')}</td>
                     <td>${escapar(r["Edad"] || '')}</td>
                     <td style="white-space:nowrap">${escapar(r["Telefono"] || '')}</td>
+                    <td>${escapar(r["Correo"] || '')}</td>
                     <td>${escapar(r["Direccion"] || '')}</td>
                     <td class="ministerio-col">${escapar(r["Ministerio"] || '')}</td>
                     <td>${badge(r["Unidos Podemos"])}</td>
